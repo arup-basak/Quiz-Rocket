@@ -1,10 +1,20 @@
 #[macro_use] extern crate rocket;
 
 use rocket::Request;
+use rocket::serde::json::Json;
+use rocket::serde::Serialize;
+
+#[derive(Serialize)]
+struct Message {
+    body: String
+}
 
 #[get("/")]
-fn index() -> &'static str {
-    "Hello, world!"
+fn index() -> Json<Message> {
+    let data = Message {
+        body: String::from("Hello World"),
+    };
+    Json(data)
 }
 
 #[catch(500)]
